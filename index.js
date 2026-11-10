@@ -1,5 +1,5 @@
+import { getProfile } from "./api.js";
 const searchBtn = document.querySelector(".searchBtn");
-const searchInput = document.querySelector(".search").value;
+const searchInput = document.querySelector(".search");
 const mainChildrens = document.querySelector("main").children;
-
-searchBtn.addEventListener("click", () => {});
+const form = document.querySelector(".theForm");
