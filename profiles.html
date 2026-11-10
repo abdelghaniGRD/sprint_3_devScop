@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <title>Document</title>
+  </head>
+  <body class="bg-slate-900 h-[100vh] relative">
+    <header
+      class="flex items-center w-[80%] h-[50px] border-[2px] border-none rounded-[10px] ml-auto mr-auto mt-[20px] bg-slate-800 relative"
+    >
+      <div
+        class="left text-white font-medium text-[20px] ml-[30px] before:bg-blue-600 before:rounded-[50%] before:w-[10px] before:h-[10px] before:border-[1px] before:absolute before:top-[20px] before:left-[15px]"
+      >
+        DevScope
+      </div>
+      <div class="right ml-auto">
+        <a href="index.html" class="text-white font-medium mr-[10px]">
+          Recherche
+        </a>
+        <a href="contact.html" class="text-blue-500 font-medium mr-[20px]">
+          Shortlist
+        </a>
+      </div>
+    </header>
+    <div
+      class="p-[20px] rounded-[20px] focus:outline-none focus:ring-0 text-white bg-slate-800 relative z-[10] mt-[20px] w-fit ml-auto mr-auto"
+    >
+      <form action="profiles.html" method="GET">
+        <input
+          type="text"
+          name="query"
+          placeholder="Entrez un nom d'utilisateur ..."
+          class="search rounded-[20px] w-[500px]"
+        />
+        <button
+          type="submit"
+          class="searchBtn text-white absolute p-[10px] border-[1px] rounded-[20px] w-[100px] right-[0px] top-[50%] -translate-y-1/2 z-999 bg-pink-400 cursor-pointer"
+        >
+          Cherche
+        </button>
+      </form>
+    </div>
+    <main class="flex gap-[20px] mt-[30px]">
+      <aside
+        class="text-white bg-slate-800 w-fit p-[20px] rounded-[10px] text-center"
+      >
+        <div class="profilePicture">the img</div>
+        <p class="name font-medium text-2xl">abdelghani gouroud</p>
+        <p class="userName text-sky-500 font-medium text-xl mt-[5px] uppercase">
+          @abdelghani-grd
+        </p>
+        <div class="post text-gray-400 mt-[20px]">
+          "full stack web developer"
+        </div>
+        <div class="address bg-slate-700 p-[10px] rounded-[10px] mt-[10px]">
+          <p class="text-gray-300 font-medium">📍 marrakech morocco</p>
+          <p class="text-gray-300 font-medium">📅 member depuis janvier 2021</p>
+        </div>
+
+        <div class="gitInfo flex mt-[20px] gap-[5px] justify-between">
+          <div class="reposetories p-[10px] bg-slate-700 rounded-[10px]">
+            <div class="reposNumber">64</div>
+            <div class="text-sm">DEPOTS</div>
+          </div>
+          <div class="followers p-[10px] bg-slate-700 rounded-[10px]">
+            <div>95</div>
+            <div class="text-sm">ABONNES</div>
+          </div>
+          <div class="following p-[10px] bg-slate-700 rounded-[10px]">
+            <div>18</div>
+            <div class="text-sm">ABONNMENTS</div>
+          </div>
+        </div>
+        <button
+          class="addToShortList block ml-auto mr-auto bg-cyan-300 p-[10px] rounded-[10px] w-full font-medium text-xl mt-[20px]"
+        >
+          Ajouter a la shortlist
+        </button>
+        <button
+          class="viewOriginalProfile block ml-auto mr-auto ml-auto mr-auto bg-fuchsia-500 p-[10px] rounded-[10px] w-full font-medium text-xl mt-[20px]"
+        >
+          voir le profil original
+        </button>
+      </aside>
+      <div class="mainContent text-white bg-slate-800 w-full p-[20px]">
+        <h1>Depots 64</h1>
+        <div class="reposList mt-[10px] flex gap-[10px]">
+          <div class="repo w-[50%] bg-slate-900 p-[20px] rounded-[10px]">
+            <div
+              class="repoName font-medium text-xl before:content-[''] before:inline-block before:bg-cyan-200 before:w-[10px] before:h-[10px] before:rounded-[10px]"
+            >
+              test workflow
+            </div>
+            <div class="description text-gray-300 mt-[10px]">
+              aucune description
+            </div>
+            <div
+              class="language font-medium text-gray-400 before:content-[''] before:inline-block before:bg-white before:w-[10px] before:h-[10px] before:rounded-[10px] mt-[10px]"
+            >
+              HTML
+            </div>
+            <div class="lastModified text-gray-500 mt-[10px]">
+              Mis a jour il y a 27 jours
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="/profiles.js"></script>
+</html>

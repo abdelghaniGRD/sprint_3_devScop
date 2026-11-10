@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+  </head>
+  <body class="bg-slate-900 h-[100vh] relative">
+    <header
+      class="flex items-center w-[80%] h-[50px] border-[2px] border-none rounded-[10px] ml-auto mr-auto mt-[20px] bg-slate-800 relative"
+    >
+      <div
+        class="left text-white font-medium text-[20px] ml-[30px] before:bg-blue-600 before:rounded-[50%] before:w-[10px] before:h-[10px] before:border-[1px] before:absolute before:top-[20px] before:left-[15px]"
+      >
+        DevScope
+      </div>
+      <div class="right ml-auto">
+        <a href="index.html" class="search text-blue-500 font-medium mr-[10px]">
+          Recherche
+        </a>
+        <a
+          href="profiles.html"
+          class="shortList text-white font-medium mr-[20px]"
+        >
+          Shortlist
+        </a>
+      </div>
+    </header>
+    <main
+      class="flex flex-col items-center justify-center mt-auto mb-auto absolute top-[50%] translate-y-[-50%] w-[80%] translate-x-[-50%] left-[50%] text-center"
+    >
+      <h1 class="text-white text-[50px]">
+        Trouvez les meilleus développeurs grace a leurs code
+      </h1>
+
+      <p class="text-white text-[25px] mt-[19px]">
+        Analysez un profil, ses projects et ses langages en quelques secondes
+      </p>
+      <div class="search relative z-[10] mt-[20px]">
+        <form action="profiles.html" method="GET">
+          <input
+            type="text"
+            name="query"
+            placeholder="Entrez un nom d'utilisateur ..."
+            class="search bg-white p-[10px] rounded-[20px] w-[500px]"
+          />
+          <button
+            type="submit"
+            class="searchBtn text-white absolute p-[10px] border-[1px] rounded-[20px] w-[100px] right-[0px] top-[50%] -translate-y-1/2 z-999 bg-pink-400 cursor-pointer"
+          >
+            Cherche
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+  <script src="index.js"></script>
+</html>
