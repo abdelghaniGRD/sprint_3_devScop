@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+  </head>
+  <body class="bg-slate-900 h-[100vh] relative">
+    <header
+      class="flex items-center w-[80%] h-[50px] border-[2px] border-none rounded-[10px] ml-auto mr-auto mt-[20px] bg-slate-800 relative"
+    >
+      <div
+        class="left text-white font-medium text-[20px] ml-[30px] before:bg-blue-600 before:rounded-[50%] before:w-[10px] before:h-[10px] before:border-[1px] before:absolute before:top-[20px] before:left-[15px]"
+      >
+        DevScope
+      </div>
+      <div class="right ml-auto">
+        <a href="index.html" class="text-white font-medium mr-[10px]">
+          Recherche
+        </a>
+        <a
+          href="shortList.html"
+          class="shortList text-blue-500 font-medium mr-[20px]"
+        >
+          Shortlist
+        </a>
+      </div>
+    </header>
+
+    <main class="text-white p-[20px]">
+      <div class="heading">
+        <div>
+          <div class="font-medium text-sky-400 text-5xl">Ma shortlist</div>
+          <div class="text-gray-400 mt-[10px]">
+            3 candidat's dans votre shortlist
+          </div>
+        </div>
+        <div class="mt-[20px] flex justify-between items-center">
+          <ul
+            class="flex gap-[20px] nav-list bg-slate-700 p-[5px] rounded-[10px]"
+          >
+            <li
+              data-active="true"
+              class="p-[10px] rounded-[10px] data-[active=true]:bg-rose-600"
+            >
+              Tous
+            </li>
+            <li
+              data-active="false"
+              class="p-[10px] rounded-[10px] data-[active=true]:bg-rose-600"
+            >
+              A contacter
+            </li>
+            <li
+              data-active="false"
+              class="p-[10px] rounded-[10px] data-[active=true]:bg-rose-600"
+            >
+              Entretien
+            </li>
+            <li
+              data-active="false"
+              class="p-[10px] rounded-[10px] data-[active=true]:bg-rose-600"
+            >
+              A retenu
+            </li>
+            <li
+              data-active="false"
+              class="p-[10px] rounded-[10px] data-[active=true]:bg-rose-600"
+            >
+              Refusé
+            </li>
+          </ul>
+          <input
+            placeholder="Rechercher un conadidat..."
+            class="bg-gray-700 p-[10px] rounded-[10px] w-[260px]"
+          />
+        </div>
+      </div>
+      <div class="listParent mt-[12px] flex flex-col gap-[20px]">
+        <!-- <div
+          class="candidate flex justify-between items-center bg-slate-800 p-[10px] rounded-[10px]"
+        >
+          <div class="info flex items-center gap-[20px]">
+            <div class="img w-[50px] h-[50px] rounded-[50%] overflow-hidden">
+              <img
+                src="https://avatars.githubusercontent.com/u/116185961?v=4"
+              />
+            </div>
+            <div>
+              <div class="font-medium text-2xl">Abdelghani grd</div>
+              <div class="flex gap-[10px]">
+                <div class="text-slate-400 mt-[5px] uppercase">
+                  @abdelghanigrd
+                </div>
+                <div
+                  class="pt-[5px] pb-[5px] pl-[9px] pr-[9px] bg-cyan-500 rounded-[10px] border-cyan-400 border-[1px] w-fit"
+                >
+                  Java
+                </div>
+              </div>
+              <div class="text-lime-600 font-medium">note</div>
+              <div class="text-gray-500 font-medium">Ajoute le 06/11/2026</div>
+            </div>
+          </div>
+          <div class="actions flex gap-[20px] items-center">
+            <div class="stars">*****</div>
+            <div
+              class="status text-red-400 p-[7px] border-red-500 border-[1px] rounded-[10px] bg-slate-800"
+            >
+              refusé
+            </div>
+            <div
+              class="modify text-blue-400 p-[10px] border-blue-500 border-[1px] rounded-[10px] bg-slate-800"
+            >
+              Modifier
+            </div>
+            <div
+              class="Delete text-red-400 p-[10px] border-red-500 border-[1px] rounded-[10px] bg-slate-800"
+            >
+              Supprimer
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </main>
+  </body>
+  <script type="module" src="shortList.js"></script>
+</html>
