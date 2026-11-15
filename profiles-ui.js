@@ -14,19 +14,23 @@ export const candidateStatus = Object.freeze({
   ToContact: { value: "toContact", label: "A contacter" },
 });
 
+const reposPerPage = 8;
+let currrentPage = 1;
+const infoPage = document.querySelector(".infoPage");
+const btnPrev = document.querySelector(".btnPrev");
+const btnNext = document.querySelector(".btnNext");
 const urlParams = new URLSearchParams(window.location.search);
+const searchBtn = document.querySelector(".searchBtn");
+const mainContent = document.querySelector(".mainContent");
+const search = document.querySelector(".search");
+const profileParent = document.querySelector(".profileParent");
+const aside = document.querySelector(".profileParent");
 
 const prevInput = urlParams.get("query");
 
 if (prevInput) {
   document.querySelector(".search").value = prevInput;
 }
-
-const searchBtn = document.querySelector(".searchBtn");
-const mainContent = document.querySelector(".mainContent");
-const search = document.querySelector(".search");
-const profileParent = document.querySelector(".profileParent");
-const aside = document.querySelector(".profileParent");
 
 let profile;
 
@@ -39,6 +43,16 @@ aside.addEventListener("click", async (e) => {
 searchBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   await displayResults();
+});
+
+btnPrev.addEventListener("click", () => {
+  currrentPage--;
+  displayRepos();
+});
+
+btnNext.addEventListener("click", () => {
+  currrentPage++;
+  displayRepos();
 });
 
 async function addCandidateToShortList() {
@@ -196,7 +210,13 @@ async function displayRepos() {
 
   if (repos.length === 0) return;
 
-  repos.forEach(async (repo) => {
+  const totalPages = Math.ceil(repos.length / reposPerPage);
+
+  const start = (currrentPage - 1) * reposPerPage;
+
+  const reposToDisplay = repos.slice(start, start + reposPerPage);
+
+  reposToDisplay.forEach(async (repo) => {
     const htmlString = await createRepoTemplate(repo);
 
     const template = document.createElement("template");
@@ -205,4 +225,8 @@ async function displayRepos() {
 
     reposList.append(template.content);
   });
+
+  infoPage.textContent = `Page ${currrentPage} / ${totalPages}`;
+  btnPrev.disabled = currrentPage <= 1;
+  btnNext.disabled = currrentPage >= totalPages;
 }

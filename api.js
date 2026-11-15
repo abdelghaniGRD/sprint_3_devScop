@@ -109,27 +109,3 @@ export async function getRepoLunguages(userName, repo) {
     return null; // Return a fallback value so the app doesn't crash
   }
 }
-
-// export async function getShortList() {
-//   try {
-//     const response = await fetch(
-//       `https://api.github.com/repos/${userName}/${repo}/languages`,
-//       {
-//         headers: {
-//           authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-
-//     if (!response.ok) {
-//       throw new Error(
-//         `GitHub API error: ${response.status} ${response.statusText}`
-//       );
-//     }
-
-//     return await response.json();
-//   } catch (e) {
-//     console.error("Failed to fetch profile:", e.message);
-//     return null; // Return a fallback value so the app doesn't crash
-//   }
-// }
