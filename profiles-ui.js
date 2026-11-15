@@ -230,3 +230,5 @@ async function displayRepos() {
   btnPrev.disabled = currrentPage <= 1;
   btnNext.disabled = currrentPage >= totalPages;
 }
+
+await displayResults();
