@@ -1,7 +1,9 @@
 export async function isCandidateAlreadyExist(userName) {
   let candidats = await getCandidats();
-  let isExists = candidats.some((u) => u.login === userName);
-  return isExists;
+  if (candidats.data !== null) {
+    let isExists = candidats.data.some((u) => u.login === userName);
+    return isExists;
+  }
 }
 
 export async function getCandidats(status) {
@@ -14,15 +16,35 @@ export async function getCandidats(status) {
     );
 
     if (!response.ok) {
-      throw new Error(
-        `Mock API error: ${response.status} ${response.statusText}`
-      );
+      if (response.status === 404) {
+        return {
+          data: null,
+          error: "not found error",
+          message: "cadidate not found ",
+        };
+      }
+
+      return {
+        data: null,
+        error: "http error",
+        message: `mock api error ${response.status} ${response.statusText}`,
+      };
     }
-    // console.log(await response.json());
-    return await response.json();
+    const data = await response.json();
+    return { data: data, error: null };
   } catch (e) {
-    console.error("Failed to fetch candidate:", e.message);
-    return null; // Return a fallback value so the app doesn't crash
+    if (e instanceof TypeError) {
+      return {
+        data: null,
+        error: "network error",
+        message: "no internet connection",
+      };
+    }
+    return {
+      data: null,
+      error: e.name || "unkonwn",
+      message: e.message,
+    };
   }
 }
 

@@ -71,15 +71,41 @@ async function createCandidateTemplate(candidate) {
           </div>
         </div>`;
 }
+async function returnError(error, message) {
+  return `<main class="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-slate-800/80 bg-[#0d111a]/90 px-6 py-16 text-center shadow-xl">
+      
+      <!-- Glowing Red Exclamation Circle -->
+      <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-rose-500/40 bg-rose-500/10 text-rose-400 shadow-[0_0_25px_rgba(244,63,94,0.25)]">
+        <span class="text-lg font-semibold">!</span>
+      </div>
 
+      <!-- Error Message -->
+      <p class="max-w-sm text-sm font-semibold leading-relaxed text-slate-100">
+        ${message}
+      </p>
+
+    </main>`;
+}
 async function loadList(status) {
-  const candidats = await getCandidats(status);
-
   listParent.innerHTML = "";
 
-  if (candidats.length === 0) return;
+  const candidats = await getCandidats(status);
 
-  candidats.forEach(async (c) => {
+  if (candidats.data === null) {
+    const htmlString = await returnError(candidats.error, candidats.message);
+
+    const template = document.createElement("template");
+
+    template.innerHTML = htmlString.trim();
+
+    listParent.append(template.content);
+
+    return;
+  }
+
+  if (candidats.data.length === 0) return;
+
+  candidats.data.forEach(async (c) => {
     const htmlString = await createCandidateTemplate(c);
 
     const template = document.createElement("template");
