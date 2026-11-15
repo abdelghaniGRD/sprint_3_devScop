@@ -4,10 +4,13 @@ export async function isCandidateAlreadyExist(userName) {
   return isExists;
 }
 
-export async function getCandidats() {
+export async function getCandidats(status) {
   try {
+    //i left it here were i need to pass the status as param to the url
     const response = await fetch(
-      `https://6af5c3a4f6270fa08d6895be.mockapi.io/api/v1/candidats`
+      `https://6af5c3a4f6270fa08d6895be.mockapi.io/api/v1/candidats?status=${
+        status === "all" ? "" : status
+      }`
     );
 
     if (!response.ok) {

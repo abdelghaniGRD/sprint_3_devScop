@@ -2,10 +2,18 @@
 import { addToShortList, getCandidats } from "./mockApi.js";
 
 const navList = document.querySelector(".nav-list");
-
 const listItems = document.querySelectorAll(".nav-list li");
-
 const listParent = document.querySelector(".listParent");
+let currentStatus = "all";
+
+navList.addEventListener("click", async (e) => {
+  const li = e.target;
+  if (li.dataset.active) {
+    const status = li.dataset.status;
+    currentStatus = status;
+    await loadList(status);
+  }
+});
 
 listItems.forEach((item) => {
   item.addEventListener("click", () => {
@@ -18,7 +26,6 @@ listItems.forEach((item) => {
 });
 
 async function createCandidateTemplate(candidate) {
-  console.log(candidate);
   return ` <div
           class="candidate flex justify-between items-center bg-slate-800 p-[10px] rounded-[10px] "
         >
@@ -65,8 +72,8 @@ async function createCandidateTemplate(candidate) {
         </div>`;
 }
 
-async function loadList() {
-  const candidats = await getCandidats();
+async function loadList(status) {
+  const candidats = await getCandidats(status);
 
   listParent.innerHTML = "";
 
@@ -83,4 +90,4 @@ async function loadList() {
   });
 }
 
-await loadList();
+await loadList(currentStatus);

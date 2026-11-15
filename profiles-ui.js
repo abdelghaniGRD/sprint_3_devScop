@@ -25,7 +25,7 @@ const mainContent = document.querySelector(".mainContent");
 const search = document.querySelector(".search");
 const profileParent = document.querySelector(".profileParent");
 const aside = document.querySelector(".profileParent");
-
+const navList = document.querySelector(".navList");
 const prevInput = urlParams.get("query");
 
 if (prevInput) {
