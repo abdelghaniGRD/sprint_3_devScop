@@ -1,9 +1,17 @@
 // import { getShortList } from "./api";
-import { addToShortList, getCandidats } from "./mockApi.js";
+import {
+  addToShortList,
+  getCandidats,
+  deleteUserFromShort,
+} from "./mockApi.js";
+
+let isBussy = false;
 
 const navList = document.querySelector(".nav-list");
 const listItems = document.querySelectorAll(".nav-list li");
 const listParent = document.querySelector(".listParent");
+const deleteModal = document.querySelector("#deleteUserModal");
+const deleteModalBtn = document.querySelector("#confirmDeleteBtn");
 let currentStatus = "all";
 
 navList.addEventListener("click", async (e) => {
@@ -25,8 +33,68 @@ listItems.forEach((item) => {
   });
 });
 
+deleteModal.addEventListener("close", async (e) => {
+  console.log(e);
+  if (deleteModal.returnValue === "delete") {
+    try {
+      const rs = await deleteUserFromShort(userDiv.dataset.id);
+      if (rs.error) {
+        alert(rs.message);
+        return;
+      }
+    } finally {
+      isBussy = false;
+      deleteModalBtn.disabled = false;
+      deleteModalBtn.textContent = originalText;
+      await loadList(currentStatus);
+    }
+  } else if (deleteModal.returnValue === "cancel") {
+    isBussy = false;
+    // btn.disabled = false;
+    // btn.textContent = originalText;
+  }
+});
+
+listParent.addEventListener("click", async (e) => {
+  const btn = e.target;
+  const userDiv = btn.closest(".candidate");
+
+  if (btn.classList.contains("Delete")) {
+    //block the fetch if its already running
+
+    if (isBussy) return;
+
+    isBussy = true;
+    btn.disabled = false;
+    const originalText = btn.textContent;
+    btn.textContent = "Deleting ...";
+    deleteModal.returnValue;
+    deleteModal.showModal();
+  } else if (btn.classList.contains("modify")) {
+  }
+});
+
+async function deleteUserModal(userId) {
+  return `
+    <dialog id="deleteUserModal" style="border: none; border-radius: 8px; padding: 24px; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: sans-serif;">
+      <h3 style="margin-top: 0; color: #111;">Delete User</h3>
+      <p style="color: #555; line-height: 1.5;">
+        Are you sure you want to delete that user</strong>? This action cannot be undone.
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+        <button id="cancelDeleteBtn" type="button" style="padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 4px; cursor: pointer;">
+          Cancel
+        </button>
+        <button id="confirmDeleteBtn" type="button" data-user-id="${userId}" style="padding: 8px 16px; border: none; background: #dc2626; color: #fff; border-radius: 4px; cursor: pointer;">
+          Delete
+        </button>
+      </div>
+    </dialog>
+  `;
+}
+
 async function createCandidateTemplate(candidate) {
-  return ` <div
+  return `<div data-id=${candidate.id} 
           class="candidate flex justify-between items-center bg-slate-800 p-[10px] rounded-[10px] "
         >
           <div class="info flex items-center gap-[20px]">
@@ -71,6 +139,7 @@ async function createCandidateTemplate(candidate) {
           </div>
         </div>`;
 }
+
 async function returnError(error, message) {
   return `<main class="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-slate-800/80 bg-[#0d111a]/90 px-6 py-16 text-center shadow-xl">
       
@@ -86,6 +155,7 @@ async function returnError(error, message) {
 
     </main>`;
 }
+
 async function loadList(status) {
   listParent.innerHTML = "";
 

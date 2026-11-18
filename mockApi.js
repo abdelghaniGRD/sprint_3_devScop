@@ -72,3 +72,45 @@ export async function addToShortList(candidate) {
     return null; // Return a fallback value so the app doesn't crash
   }
 }
+
+export async function deleteUserFromShort(userId) {
+  try {
+    const response = await fetch(
+      `https://6af5c3a4f6270fa08d6895be.mockapi.io/api/v1/candidats/${userId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return {
+          data: null,
+          error: "not found error",
+          message: "cadidate not found ",
+        };
+      }
+
+      return {
+        data: null,
+        error: "http error",
+        message: `mock api error ${response.status} ${response.statusText}`,
+      };
+    }
+
+    return { data: 1, error: null };
+  } catch (e) {
+    if (e instanceof TypeError) {
+      return {
+        data: null,
+        error: "network error",
+        message: "no internet connection",
+      };
+    }
+    return {
+      data: null,
+      error: e.name || "unkonwn",
+      message: e.message,
+    };
+  }
+}
