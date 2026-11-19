@@ -114,3 +114,92 @@ export async function deleteUserFromShort(userId) {
     };
   }
 }
+
+export async function getCandidatById(id) {
+  try {
+    console.log(typeof id);
+    //i left it here were i need to pass the status as param to the url
+    const response = await fetch(
+      `https://6af5c3a4f6270fa08d6895be.mockapi.io/api/v1/candidats/${id}`
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return {
+          data: null,
+          error: "not found error",
+          message: "cadidate not found ",
+        };
+      }
+
+      return {
+        data: null,
+        error: "http error",
+        message: `mock api error ${response.status} ${response.statusText}`,
+      };
+    }
+    const data = await response.json();
+    return { data: data, error: null };
+  } catch (e) {
+    if (e instanceof TypeError) {
+      return {
+        data: null,
+        error: "network error",
+        message: "no internet connection",
+      };
+    }
+    return {
+      data: null,
+      error: e.name || "unkonwn",
+      message: e.message,
+    };
+  }
+}
+
+export async function modifyCandidate(candidate) {
+  try {
+    //i left it here were i need to pass the status as param to the url
+    console.log(typeof candidate.id);
+    const response = await fetch(
+      `https://6af5c3a4f6270fa08d6895be.mockapi.io/api/v1/candidats/${candidate.id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(candidate),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return {
+          data: null,
+          error: "not found error",
+          message: "cadidate not found ",
+        };
+      }
+
+      return {
+        data: null,
+        error: "http error",
+        message: `mock api error ${response.status} ${response.statusText}`,
+      };
+    }
+    const data = await response.json();
+    return { data: data, error: null };
+  } catch (e) {
+    if (e instanceof TypeError) {
+      return {
+        data: null,
+        error: "network error",
+        message: "no internet connection",
+      };
+    }
+    return {
+      data: null,
+      error: e.name || "unkonwn",
+      message: e.message,
+    };
+  }
+}

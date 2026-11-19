@@ -82,52 +82,7 @@
           />
         </div>
       </div>
-      <div class="listParent mt-[12px] flex flex-col gap-[20px]">
-        <!-- <div
-          class="candidate flex justify-between items-center bg-slate-800 p-[10px] rounded-[10px]"
-        >
-          <div class="info flex items-center gap-[20px]">
-            <div class="img w-[50px] h-[50px] rounded-[50%] overflow-hidden">
-              <img
-                src="https://avatars.githubusercontent.com/u/116185961?v=4"
-              />
-            </div>
-            <div>
-              <div class="font-medium text-2xl">Abdelghani grd</div>
-              <div class="flex gap-[10px]">
-                <div class="text-slate-400 mt-[5px] uppercase">
-                  @abdelghanigrd
-                </div>
-                <div
-                  class="pt-[5px] pb-[5px] pl-[9px] pr-[9px] bg-cyan-500 rounded-[10px] border-cyan-400 border-[1px] w-fit"
-                >
-                  Java
-                </div>
-              </div>
-              <div class="text-lime-600 font-medium">note</div>
-              <div class="text-gray-500 font-medium">Ajoute le 06/11/2026</div>
-            </div>
-          </div>
-          <div class="actions flex gap-[20px] items-center">
-            <div class="stars">*****</div>
-            <div
-              class="status text-red-400 p-[7px] border-red-500 border-[1px] rounded-[10px] bg-slate-800"
-            >
-              refusé
-            </div>
-            <div
-              class="modify text-blue-400 p-[10px] border-blue-500 border-[1px] rounded-[10px] bg-slate-800"
-            >
-              Modifier
-            </div>
-            <div
-              class="Delete text-red-400 p-[10px] border-red-500 border-[1px] rounded-[10px] bg-slate-800"
-            >
-              Supprimer
-            </div>
-          </div>
-        </div> -->
-      </div>
+      <div class="listParent mt-[12px] flex flex-col gap-[20px]"></div>
     </main>
     <dialog
       id="deleteUserModal"
@@ -185,6 +140,184 @@
         </div>
       </form>
     </dialog>
+    <div
+      id="candidateModal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-[#06080f]/80 p-4 backdrop-blur-sm"
+    >
+      <!-- Modal Card -->
+      <div
+        role="dialog"
+        aria-labelledby="modalTitle"
+        aria-modal="true"
+        class="w-full max-w-[560px] rounded-[20px] border border-[#222638] bg-[#131622] p-8 shadow-[0_24px_48px_rgba(0,0,0,0.5)]"
+      >
+        <!-- Header -->
+        <div class="mb-7 flex items-start justify-between gap-4">
+          <div>
+            <p
+              class="mb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-[#63d2d6]"
+            >
+              MISE À JOUR DU PROFIL
+            </p>
+            <h2
+              id="modalTitle"
+              class="text-[21px] font-bold leading-snug text-white"
+            >
+              Modifier le candidat
+              <span class="mx-1 text-[#5c637a]">&bull;</span>
+              <span class="text-[#d95eb8] candidateName"></span>
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Fermer"
+            onclick="document.getElementById('candidateModal').classList.add('hidden')"
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2a3046] bg-[#1d2132] text-[#a0a8c0] transition hover:bg-[#282e44] hover:text-white"
+          >
+            <svg
+              class="h-3.5 w-3.5"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M1 1L13 13M13 1L1 13" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form id="candidateForm" class="space-y-5">
+          <!-- Statut de recrutement -->
+          <div>
+            <label
+              for="status"
+              class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
+            >
+              Statut de recrutement
+            </label>
+            <div class="relative">
+              <select
+                id="status"
+                class="w-full cursor-pointer appearance-none rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 pr-10 text-sm text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
+              >
+                <option value="refused">Refusé</option>
+                <option value="toContact">A contacter</option>
+              </select>
+              <svg
+                class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-[#7c859e]"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2.5 4.5L6 8L9.5 4.5" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Note -->
+          <div>
+            <label
+              for="rating"
+              class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
+            >
+              Note
+            </label>
+            <div class="relative">
+              <select
+                id="rating"
+                class="w-full cursor-pointer appearance-none rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 pr-10 text-sm text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
+              >
+                <option value="5">
+                  &#9733;&#9733;&#9733;&#9733;&#9733; 5 / 5
+                </option>
+                <option value="4">
+                  &#9733;&#9733;&#9733;&#9733;&#9734; 4 / 5
+                </option>
+                <option value="3">
+                  &#9733;&#9733;&#9733;&#9734;&#9734; 3 / 5
+                </option>
+                <option value="2">
+                  &#9733;&#9733;&#9734;&#9734;&#9734; 2 / 5
+                </option>
+                <option value="1">
+                  &#9733;&#9734;&#9734;&#9734;&#9734; 1 / 5
+                </option>
+              </select>
+              <svg
+                class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-[#7c859e]"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2.5 4.5L6 8L9.5 4.5" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Note interne -->
+          <div>
+            <label
+              for="internalNote"
+              class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
+            >
+              Note interne
+            </label>
+            <textarea
+              id="internalNote"
+              rows="4"
+              placeholder="Ajouter une note interne..."
+              class="min-h-[125px] w-full resize-y rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 text-sm leading-relaxed text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
+            >
+${candidate.note}</textarea
+            >
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onclick="document.getElementById('candidateModal').classList.add('hidden')"
+              class="rounded-xl border border-[#2c334a] bg-[#1d2132] px-5 py-3 text-sm font-semibold text-[#c5cde0] transition hover:bg-[#252b40] hover:text-white active:scale-[0.98]"
+            >
+              Annuler
+            </button>
+
+            <button
+              type="submit"
+              class="saveBtn inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#56cbe8] via-[#9b8df2] to-[#e15bb8] px-5 py-3 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(225,91,184,0.28)] transition hover:opacity-90 active:scale-[0.98]"
+            >
+              <svg
+                class="h-4 w-4"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 8.5L6.5 12L13 4.5" />
+              </svg>
+              Enregistrer
+            </button>
+          </div>
+
+          <!-- Satate  -->
+          <div
+            class="state hidden text-white w-[100%] h-[50px] rounded-[10px] flex items-center font-medium text-[20px] p-[10px]"
+          ></div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal Backdrop -->
   </body>
   <script type="module" src="shortList.js"></script>
 </html>
