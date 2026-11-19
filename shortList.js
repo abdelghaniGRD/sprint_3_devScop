@@ -51,10 +51,9 @@ listItems.forEach((item) => {
 });
 
 deleteModal.addEventListener("close", async (e) => {
-  console.log(e);
   if (deleteModal.returnValue === "delete") {
     try {
-      const rs = await deleteUserFromShort(userDiv.dataset.id);
+      const rs = await deleteUserFromShort(deleteModal.dataset.id);
       if (rs.error) {
         alert(rs.message);
         return;
@@ -62,13 +61,11 @@ deleteModal.addEventListener("close", async (e) => {
     } finally {
       isBussy = false;
       deleteModalBtn.disabled = false;
-      deleteModalBtn.textContent = originalText;
+      deleteModalBtn.textContent = "Supprimer";
       await loadList(currentStatus);
     }
   } else if (deleteModal.returnValue === "cancel") {
     isBussy = false;
-    // btn.disabled = false;
-    // btn.textContent = originalText;
   }
 });
 
@@ -85,11 +82,19 @@ listParent.addEventListener("click", async (e) => {
     btn.disabled = false;
     const originalText = btn.textContent;
     btn.textContent = "Deleting ...";
-    deleteModal.returnValue;
+    deleteModal.dataset.id = userDiv.dataset.id;
     deleteModal.showModal();
   } else if (btn.classList.contains("modify")) {
     const id = e.target.closest(".candidate").dataset.id;
     await modify(id);
+  }
+});
+
+deleteModal.addEventListener("click", (e) => {
+  if (e.target.id === "confirmDeleteBtn") {
+    deleteModal.close("delete");
+  } else if (e.target.id === "cancelDeleteBtn") {
+    deleteModal.close("cancel");
   }
 });
 
@@ -147,174 +152,6 @@ async function modify(candidateId) {
     candidateModel.querySelector("#internalNote").value = candidat.note;
   }
 }
-
-// function returnModifyModalTemplate(candidate) {
-// return `<div
-//     id="candidateModal"
-//     class="fixed inset-0 z-50 flex items-center justify-center bg-[#06080f]/80 p-4 backdrop-blur-sm"
-//   >
-//     <!-- Modal Card -->
-//     <div
-//       role="dialog"
-//       aria-labelledby="modalTitle"
-//       aria-modal="true"
-//       class="w-full max-w-[560px] rounded-[20px] border border-[#222638] bg-[#131622] p-8 shadow-[0_24px_48px_rgba(0,0,0,0.5)]"
-//     >
-//       <!-- Header -->
-//       <div class="mb-7 flex items-start justify-between gap-4">
-//         <div>
-//           <p
-//             class="mb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-[#63d2d6]"
-//           >
-//             MISE À JOUR DU PROFIL
-//           </p>
-//           <h2
-//             id="modalTitle"
-//             class="text-[21px] font-bold leading-snug text-white"
-//           >
-//             Modifier le candidat
-//             <span class="mx-1 text-[#5c637a]">&bull;</span>
-//             <span class="text-[#d95eb8]">${candidate.name}</span>
-//           </h2>
-//         </div>
-
-//         <button
-//           type="button"
-//           aria-label="Fermer"
-//           onclick="document.getElementById('candidateModal').classList.add('hidden')"
-//           class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2a3046] bg-[#1d2132] text-[#a0a8c0] transition hover:bg-[#282e44] hover:text-white"
-//         >
-//           <svg
-//             class="h-3.5 w-3.5"
-//             viewBox="0 0 14 14"
-//             fill="none"
-//             stroke="currentColor"
-//             stroke-width="2"
-//             stroke-linecap="round"
-//           >
-//             <path d="M1 1L13 13M13 1L1 13" />
-//           </svg>
-//         </button>
-//       </div>
-
-//       <!-- Form -->
-//       <form id="candidateForm" class="space-y-5">
-//         <!-- Statut de recrutement -->
-//         <div>
-//           <label
-//             for="status"
-//             class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
-//           >
-//             Statut de recrutement
-//           </label>
-//           <div class="relative">
-//             <select
-//               id="status"
-//               class="w-full cursor-pointer appearance-none rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 pr-10 text-sm text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
-//             > ${Object.values(candidateStatus).map((key) => {
-//               return `<option value=${key.value} ${
-//                 candidate.status === key.value ? "selected" : ""
-//               } >${key.label}</option>`;
-//             })}
-
-//             </select>
-//             <svg
-//               class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-[#7c859e]"
-//               viewBox="0 0 12 12"
-//               fill="none"
-//               stroke="currentColor"
-//               stroke-width="1.8"
-//               stroke-linecap="round"
-//               stroke-linejoin="round"
-//             >
-//               <path d="M2.5 4.5L6 8L9.5 4.5" />
-//             </svg>
-//           </div>
-//         </div>
-
-//         <!-- Note -->
-//         <div>
-//           <label
-//             for="rating"
-//             class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
-//           >
-//             Note
-//           </label>
-//           <div class="relative">
-//             <select
-//               id="rating"
-//               class="w-full cursor-pointer appearance-none rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 pr-10 text-sm text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
-//             >
-//             ${Object.values(ratings).map((key) => {
-//               return `<option value=${key.value} ${
-//                 candidate.rating === key.value ? "selected" : ""
-//               } >${key.label}</option>`;
-//             })}
-
-//             </select>
-//             <svg
-//               class="pointer-events-none absolute right-4 top-1/2 h-3 w-3 -translate-y-1/2 text-[#7c859e]"
-//               viewBox="0 0 12 12"
-//               fill="none"
-//               stroke="currentColor"
-//               stroke-width="1.8"
-//               stroke-linecap="round"
-//               stroke-linejoin="round"
-//             >
-//               <path d="M2.5 4.5L6 8L9.5 4.5" />
-//             </svg>
-//           </div>
-//         </div>
-
-//         <!-- Note interne -->
-//         <div>
-//           <label
-//             for="internalNote"
-//             class="mb-2 block text-[13px] font-semibold text-[#a4adc4]"
-//           >
-//             Note interne
-//           </label>
-//           <textarea
-//             id="internalNote"
-//             rows="4"
-//             placeholder="Ajouter une note interne..."
-//             class="min-h-[125px] w-full resize-y rounded-xl border border-[#2b3248] bg-[#1b2030] px-4 py-3.5 text-sm leading-relaxed text-[#e6eaf5] outline-none transition focus:border-[#5bc2e7] focus:ring-2 focus:ring-[#5bc2e7]/20"
-//           >${candidate.note}</textarea
-//           >
-//         </div>
-
-//         <!-- Footer Buttons -->
-//         <div class="flex items-center justify-end gap-3 pt-2">
-//           <button
-//             type="button"
-//             onclick="document.getElementById('candidateModal').classList.add('hidden')"
-//             class="rounded-xl border border-[#2c334a] bg-[#1d2132] px-5 py-3 text-sm font-semibold text-[#c5cde0] transition hover:bg-[#252b40] hover:text-white active:scale-[0.98]"
-//           >
-//             Annuler
-//           </button>
-
-//           <button
-//             type="submit"
-//             class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#56cbe8] via-[#9b8df2] to-[#e15bb8] px-5 py-3 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(225,91,184,0.28)] transition hover:opacity-90 active:scale-[0.98]"
-//           >
-//             <svg
-//               class="h-4 w-4"
-//               viewBox="0 0 16 16"
-//               fill="none"
-//               stroke="currentColor"
-//               stroke-width="2.2"
-//               stroke-linecap="round"
-//               stroke-linejoin="round"
-//             >
-//               <path d="M3 8.5L6.5 12L13 4.5" />
-//             </svg>
-//             Enregistrer
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   </div>`;
-// }
 
 async function deleteUserModal(userId) {
   return `
