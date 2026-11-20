@@ -27,13 +27,18 @@ const profileParent = document.querySelector(".profileParent");
 const aside = document.querySelector(".profileParent");
 const navList = document.querySelector(".navList");
 const prevInput = urlParams.get("query");
+const deposCount = document.querySelector(".deposCount");
+const repoSearch = document.querySelector("#searchRepo");
+const filterList = document.querySelector("#filterList");
+
+let selectedFilter = "all";
 
 if (prevInput) {
   document.querySelector(".search").value = prevInput;
 }
 
 let profile;
-
+let isBussy = false;
 aside.addEventListener("click", async (e) => {
   if (e.target.matches(".addToShortList")) {
     await addCandidateToShortList();
@@ -47,12 +52,21 @@ searchBtn.addEventListener("click", async (e) => {
 
 btnPrev.addEventListener("click", () => {
   currrentPage--;
-  displayRepos();
+  displayRepos(repoSearch.value, selectedFilter);
 });
 
 btnNext.addEventListener("click", () => {
   currrentPage++;
-  displayRepos();
+  displayRepos(repoSearch.value, selectedFilter);
+});
+
+repoSearch.addEventListener("input", async () => {
+  await displayRepos(repoSearch.value, selectedFilter);
+});
+
+filterList.addEventListener("click", async (e) => {
+  selectedFilter = e.target.dataset.val;
+  await displayRepos(repoSearch.value, selectedFilter);
 });
 
 async function addCandidateToShortList() {
@@ -72,7 +86,7 @@ async function addCandidateToShortList() {
 }
 
 async function createProfileTemplate(profile) {
-  const repos = await getRepos(profile.login);
+  const repos = await getRepos(profile.login, "", selectedFilter);
 
   const followers = await getFollowers(profile.login);
   const following = await getFollowing(profile.login);
@@ -198,17 +212,29 @@ async function displayResults() {
   // mainContent.classList.remove("hidden");
   // mainContent.classList.add("block");
 
-  await displayRepos();
+  await displayRepos(repoSearch.value, selectedFilter);
 }
 
-async function displayRepos() {
+async function displayRepos(repoName, language) {
+  console.log(repoSearch.value, selectedFilter);
+  if (isBussy) {
+    return;
+  }
+
+  isBussy = true;
+
   let reposList = document.querySelector(".reposList");
 
   reposList.innerHTML = "";
 
-  const repos = await getRepos(search.value);
+  const repos = await getRepos(search.value, repoSearch.value, selectedFilter);
 
-  if (repos.length === 0) return;
+  if (repos.length === 0) {
+    isBussy = false;
+    return;
+  }
+
+  deposCount.textContent = repos.length;
 
   const totalPages = Math.ceil(repos.length / reposPerPage);
 
@@ -229,6 +255,8 @@ async function displayRepos() {
   infoPage.textContent = `Page ${currrentPage} / ${totalPages}`;
   btnPrev.disabled = currrentPage <= 1;
   btnNext.disabled = currrentPage >= totalPages;
+
+  isBussy = false;
 }
 
 await displayResults();

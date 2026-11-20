@@ -48,7 +48,37 @@
         class="profileParent text-white bg-slate-800 w-fit p-[20px] rounded-[10px] text-center"
       ></aside>
       <div class="mainContent text-white bg-slate-800 w-full p-[20px]">
-        <h1>Depots 64</h1>
+        <div class="flex justify-between">
+          <input
+            id="searchRepo"
+            placeholder="Cherche use repository"
+            class="w-[50%] p-[10px] bg-slate-700 rounded-[10px]"
+          />
+          <ul id="filterList" class="flex justify-around w-[50%] items-center">
+            <li
+              class="bg-pink-400 p-[10px] font-bold text-[20px] rounded-[10px]"
+              data-val="all"
+            >
+              Tous
+            </li>
+            <li
+              class="p-[10px] font-bold text-[20px] rounded-[10px]"
+              data-val="JavaScript"
+            >
+              js
+            </li>
+            <li class="font-bold text-[20px] rounded-[10px]" data-val="java">
+              java
+            </li>
+            <li class="font-bold text-[20px] rounded-[10px]" data-val="C#">
+              c#
+            </li>
+            <li class="font-bold text-[20px] rounded-[10px]" data-val="c++">
+              c++
+            </li>
+          </ul>
+        </div>
+        <h1 class="deposCount"></h1>
         <div class="reposList mt-[10px] flex gap-[10px] flex-wrap"></div>
         <div class="pagination flex justify-center mt-[10px] items-center">
           <div class="btnPrev font-bold text-[20px] p-[10px] border-[1px]">
