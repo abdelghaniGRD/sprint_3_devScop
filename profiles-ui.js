@@ -138,7 +138,10 @@ async function createRepoTemplate(repo) {
   let lunguages = await getRepoLunguages(search.value, repo.name);
 
   return `
-    <div class="repo w-[49%] bg-slate-900 p-[20px] rounded-[10px] h-[300px]">
+    <div class="repo w-[49%] bg-slate-900 p-[20px] rounded-[10px] h-[300px] relative">
+            <div class="stars absolute right-[20px]">${
+              repo.stargazers_count
+            }/⭐</div>
             <div
               class="repoName font-medium text-xl before:content-[''] before:inline-block before:bg-cyan-200 before:w-[10px] before:h-[10px] before:rounded-[10px]"
             >

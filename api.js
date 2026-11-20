@@ -45,34 +45,41 @@ export async function getUserSubscriptions(userName) {
 }
 
 export async function getRepos(userName, repoName, language) {
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${userName}/repos`
-    );
+  let repos = getCache("repo-" + repoName + "-" + userName);
 
-    if (!response.ok) {
-      throw new Error(
-        `GitHub API error: ${response.status} ${response.statusText}`
+  if (repos) {
+    console.log("repo from cach");
+    return repos;
+  } else {
+    try {
+      const response = await fetch(
+        `https://api.github.com/users/${userName}/repos?per_page=100`
       );
+
+      if (!response.ok) {
+        throw new Error(
+          `GitHub API error: ${response.status} ${response.statusText}`
+        );
+      }
+
+      let data = await response.json();
+
+      const rs = data.filter((repo) => {
+        const matchesName = repo.name
+          .toLowerCase()
+          .includes(repoName.toLowerCase());
+        const matchesLanguage =
+          language === "all" || repo.language === language;
+
+        return matchesName && matchesLanguage;
+      });
+      setCache("repo-" + repoName + "-" + userName, rs);
+      console.log("fetched from api");
+      return rs;
+    } catch (e) {
+      console.error("Failed to fetch profile:", e.message);
+      return null; // Return a fallback value so the app doesn't crash
     }
-
-    let repos = await response.json();
-
-    const rs = repos.filter((repo) => {
-      const matchesName = repo.name
-        .toLowerCase()
-        .includes(repoName.toLowerCase());
-      const matchesLanguage = language === "all" || repo.language === language;
-
-      return matchesName && matchesLanguage;
-    });
-
-    console.log(rs);
-
-    return rs;
-  } catch (e) {
-    console.error("Failed to fetch profile:", e.message);
-    return null; // Return a fallback value so the app doesn't crash
   }
 }
 
